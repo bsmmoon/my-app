@@ -4,7 +4,11 @@ export function user() {
   const provider = new GoogleAuthProvider();
 
   const auth = getAuth();
-  return new Promise<{ accessToken: string | null, displayName: string | null }>((resolve) =>
+  return new Promise<{
+    accessToken: string | null,
+    displayName: string | null,
+    photoURL: string | null,
+  }>((resolve) =>
     signInWithPopup(auth, provider)
       .then((result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
@@ -17,9 +21,9 @@ export function user() {
         // const token = credential.accessToken;
         // The signed-in user info.
         const { accessToken=null } = credential;
-        const { displayName } = result.user;
+        const { displayName, photoURL } = result.user;
         
-        resolve({ accessToken, displayName })
+        resolve({ accessToken, displayName, photoURL })
       }).catch((error) => {
         // Handle Errors here.
         const errorCode = error.code;
