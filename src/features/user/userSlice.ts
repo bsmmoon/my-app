@@ -4,13 +4,13 @@ import { RootState } from '../../app/store';
 import { authWithGoogle, getCurrentUser } from './userAPI';
 
 export interface UserState {
-  accessToken: string | null,
+  uid: string | null,
   displayName: string | null,
   photoURL: string | null,
 }
 
 const initialState: UserState = {
-  accessToken: null,
+  uid: null,
   displayName: null,
   photoURL: null,
 };
@@ -37,12 +37,12 @@ export const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(authenticate.fulfilled, (state, action) => {
-        state.accessToken = action.payload.accessToken;
+        state.uid = action.payload.uid;
         state.displayName = action.payload.displayName;
         state.photoURL = action.payload.photoURL;
       })
       .addCase(checkSignIn.fulfilled, (state, action) => {
-        state.accessToken = action.payload.accessToken;
+        state.uid = action.payload.uid;
         state.displayName = action.payload.displayName;
         state.photoURL = action.payload.photoURL;
       });

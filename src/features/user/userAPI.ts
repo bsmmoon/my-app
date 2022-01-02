@@ -5,7 +5,7 @@ export function authWithGoogle() {
 
   const auth = getAuth();
   return new Promise<{
-    accessToken: string | null,
+    uid: string | null,
     displayName: string | null,
     photoURL: string | null,
   }>((resolve) =>
@@ -18,12 +18,9 @@ export function authWithGoogle() {
 
         console.log({credential, result})
 
-        // const token = credential.accessToken;
-        // The signed-in user info.
-        const { accessToken=null } = credential;
-        const { displayName, photoURL } = result.user;
+        const { uid, displayName, photoURL } = result.user;
         
-        resolve({ accessToken, displayName, photoURL })
+        resolve({ uid, displayName, photoURL })
       }).catch((error) => {
         // Handle Errors here.
         const errorCode = error.code;
@@ -47,7 +44,7 @@ export function getCurrentUser() {
   const auth = getAuth();
 
   return new Promise<{
-    accessToken: string | null,
+    uid: string | null,
     displayName: string | null,
     photoURL: string | null,
   }>((resolve) =>
@@ -55,9 +52,9 @@ export function getCurrentUser() {
       console.log(user)
       if (!user) return
 
-      const { displayName, photoURL } = user;
+      const { uid, displayName, photoURL } = user;
 
-      resolve({ accessToken: "", displayName, photoURL })
+      resolve({ uid, displayName, photoURL })
     })
   );
 }
