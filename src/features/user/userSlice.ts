@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+
 import { RootState } from '../../app/store';
-import { user } from './userAPI';
+import { authWithGoogle, getCurrentUser } from './userAPI';
 
 export interface UserState {
   accessToken: string | null,
@@ -14,23 +15,33 @@ const initialState: UserState = {
   photoURL: null,
 };
 
-export const userAsync = createAsyncThunk(
-    'user',
-    async () => {
-      const response = await user();
-      return response
-    }
-  );
-  
+export const authenticate = createAsyncThunk(
+  'user/authenticate',
+  async () => {
+    return await authWithGoogle();
+  }
+);
+
+export const checkSignIn = createAsyncThunk(
+  'user/checkSignIn',
+  async () => {
+    return await getCurrentUser();
+  }
+);
+
 export const userSlice = createSlice({
   name: 'user',
   initialState,
-  // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
   },
   extraReducers: (builder) => {
     builder
-      .addCase(userAsync.fulfilled, (state, action) => {
+      .addCase(authenticate.fulfilled, (state, action) => {
+        state.accessToken = action.payload.accessToken;
+        state.displayName = action.payload.displayName;
+        state.photoURL = action.payload.photoURL;
+      })
+      .addCase(checkSignIn.fulfilled, (state, action) => {
         state.accessToken = action.payload.accessToken;
         state.displayName = action.payload.displayName;
         state.photoURL = action.payload.photoURL;

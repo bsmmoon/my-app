@@ -1,6 +1,6 @@
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from 'firebase/auth';
 
-export function user() {
+export function authWithGoogle() {
   const provider = new GoogleAuthProvider();
 
   const auth = getAuth();
@@ -40,5 +40,24 @@ export function user() {
           credential,
         })
       })
+  );
+}
+
+export function getCurrentUser() {
+  const auth = getAuth();
+
+  return new Promise<{
+    accessToken: string | null,
+    displayName: string | null,
+    photoURL: string | null,
+  }>((resolve) =>
+    onAuthStateChanged(auth, (user) => {
+      console.log(user)
+      if (!user) return
+
+      const { displayName, photoURL } = user;
+
+      resolve({ accessToken: "", displayName, photoURL })
+    })
   );
 }
