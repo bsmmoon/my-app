@@ -1,59 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import { Signin } from './features/signin/Signin';
+import { useAppSelector } from './app/hooks';
+import { Navigation } from './features/navigation/Navigation';
+import { getCurrentNavigation } from './features/navigation/navigationSlice';
 import './App.css';
 
+import { Layout } from 'antd';
+import { Counter } from './features/counter/Counter';
+import { Signin } from './features/signin/Signin';
+const { Header, Footer, Content } = Layout;
+
 function App() {
+  const currentNavigation = useAppSelector(getCurrentNavigation);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Signin />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>HELLO WORLD </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
+    <>
+      <Layout>
+        <Header>
+          <Navigation />
+        </Header>
+        <Content>
+          {currentNavigation !== "counter" ? "" : <Counter />}
+          {currentNavigation !== "signin" ? "" : <Signin />}
+        </Content>
+        <Footer>
+          footer
+        </Footer>
+      </Layout>
+    </>
   );
 }
 
