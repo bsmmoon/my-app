@@ -1,20 +1,22 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { signin } from './signinAPI';
+import { User } from '../../app/types'
 
 export interface SigninState {
-  value: number;
+  user: User | null;
   status: 'idle' | 'loading' | 'failed';
 }
 
 const initialState: SigninState = {
-  value: 0,
+  user: null,
   status: 'idle',
 };
 
 export const signinAsync = createAsyncThunk(
     'signin/signin',
     async () => {
-      await signin();
+      const response = await signin();
+      return response
     }
   );
   
@@ -31,6 +33,7 @@ export const signinSlice = createSlice({
       })
       .addCase(signinAsync.fulfilled, (state, action) => {
         state.status = 'idle';
+        state.user = action.payload;
       });
   },
 });

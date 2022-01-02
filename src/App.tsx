@@ -18,11 +18,11 @@ function App() {
         <Header>
           <Navigation />
         </Header>
-        <Content>
+        <Content style={{ padding: '0 50px' }}>
           {currentNavigation !== "counter" ? "" : <Counter />}
           {currentNavigation !== "signin" ? "" : <Signin />}
         </Content>
-        <Footer>
+        <Footer style={{ textAlign: 'center' }}>
           footer
         </Footer>
       </Layout>
