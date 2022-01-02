@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { RootState } from '../../app/store';
-import { authWithGoogle, getCurrentUser } from './userAPI';
+import { authWithGoogle, getCurrentUser, signOut as requestSignOut } from './userAPI';
 
 export interface UserState {
   uid: string | null,
@@ -29,6 +29,13 @@ export const checkSignIn = createAsyncThunk(
   }
 );
 
+export const signOut = createAsyncThunk(
+  'user/signOut',
+  async () => {
+    return await requestSignOut();
+  }
+);
+
 export const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -45,6 +52,11 @@ export const userSlice = createSlice({
         state.uid = action.payload.uid;
         state.displayName = action.payload.displayName;
         state.photoURL = action.payload.photoURL;
+      })
+      .addCase(signOut.fulfilled, (state) => {
+        state.uid = initialState.uid
+        state.displayName = initialState.displayName
+        state.photoURL = initialState.photoURL
       });
   },
 });
@@ -53,5 +65,6 @@ export const userSlice = createSlice({
 
 export const getDisplayName = (state: RootState) => state.user.displayName;
 export const getPhotoURL = (state: RootState) => state.user.photoURL;
+export const getUID = (state: RootState) => state.user.uid;
 
 export default userSlice.reducer;

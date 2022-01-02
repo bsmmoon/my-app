@@ -1,4 +1,4 @@
-import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut as firebaseSignOut } from 'firebase/auth';
 
 export function authWithGoogle() {
   const provider = new GoogleAuthProvider();
@@ -55,6 +55,30 @@ export function getCurrentUser() {
       const { uid, displayName, photoURL } = user;
 
       resolve({ uid, displayName, photoURL })
+    })
+  );
+}
+
+export function signOut() {
+  const auth = getAuth();
+
+  return new Promise<void>((resolve) =>
+    firebaseSignOut(auth).then(() => {
+      resolve()
+    }).catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // The email of the user's account used.
+      const email = error.email;
+      // The AuthCredential type that was used.
+      const credential = GoogleAuthProvider.credentialFromError(error);
+      // ...
+      console.log({
+        errorCode,
+        errorMessage,
+        email,
+        credential,
+      })
     })
   );
 }
