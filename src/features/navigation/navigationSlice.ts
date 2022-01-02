@@ -6,7 +6,7 @@ export interface NavigationState {
 }
 
 const initialState: NavigationState = {
-  current: "counter",
+  current: "history",
 };
 
 export const navigationSlice = createSlice({

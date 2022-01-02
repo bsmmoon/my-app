@@ -21,6 +21,7 @@ export function Navigation() {
 
   return (
     <Menu theme="dark" mode="horizontal" defaultSelectedKeys={[currentNavigation]}>
+      <Menu.Item key="history" onClick={() => dispatch(setCurrentNavigation("history"))}>History</Menu.Item>
       <Menu.Item key="counter" onClick={() => dispatch(setCurrentNavigation("counter"))}>Counter</Menu.Item>
       <Menu.Item key="signin" onClick={() => dispatch(setCurrentNavigation("signin"))}>
         <Space>

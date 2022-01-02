@@ -5,6 +5,7 @@ import React, { useEffect } from 'react';
 
 import { useAppDispatch, useAppSelector } from './app/hooks';
 import { Counter } from './features/counter/Counter';
+import { History } from './features/history/History';
 import { Navigation } from './features/navigation/Navigation';
 import { getCurrentNavigation } from './features/navigation/navigationSlice';
 import { User } from './features/user/User';
@@ -27,7 +28,8 @@ function App() {
         <Header>
           <Navigation />
         </Header>
-        <Content style={{ padding: '0 50px' }}>
+        <Content style={{ padding: '32px' }}>
+          {currentNavigation !== "history" ? "" : <History />}
           {currentNavigation !== "counter" ? "" : <Counter />}
           {currentNavigation !== "signin" ? "" : <User />}
         </Content>
