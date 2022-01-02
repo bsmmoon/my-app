@@ -6,7 +6,7 @@ import './App.css';
 
 import { Layout } from 'antd';
 import { Counter } from './features/counter/Counter';
-import { Signin } from './features/signin/Signin';
+import { User } from './features/user/User';
 const { Header, Footer, Content } = Layout;
 
 function App() {
@@ -20,7 +20,7 @@ function App() {
         </Header>
         <Content style={{ padding: '0 50px' }}>
           {currentNavigation !== "counter" ? "" : <Counter />}
-          {currentNavigation !== "signin" ? "" : <Signin />}
+          {currentNavigation !== "signin" ? "" : <User />}
         </Content>
         <Footer style={{ textAlign: 'center' }}>
           footer
