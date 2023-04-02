@@ -1,9 +1,9 @@
-import { Table, Tag } from 'antd';
+import { Button, Input, Space, Table, Tag } from 'antd';
 import { useEffect } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { fetchHistoryEntries, getHistoryEntries } from './historySlice';
-
+   
 function tableColumns(colourMapping: { [key: string]: string }) {
   return [
     {
@@ -54,6 +54,12 @@ export function History() {
   const columns = tableColumns(colourMapping)
   
   return <>
-    <Table dataSource={dataSource} columns={columns} />
+    <Space direction='vertical' style={{width: '100%'}}>
+      <Input.Group compact>
+        <Input style={{ width: 'calc(100% - 128px)' }} placeholder='New Entry' />
+        <Button style={{ width: '128px' }} type='primary'>Submit</Button>
+      </Input.Group>
+      <Table dataSource={dataSource} columns={columns} />
+    </Space>
   </>
 }
